@@ -42,7 +42,7 @@ Plugin 'davidhalter/jedi-vim'
 "Plugin 'klen/python-mode'
 Plugin 'powerline/powerline'
 Plugin 'scrooloose/syntastic'
-
+Plugin 'vim-scripts/nginx.vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
