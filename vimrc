@@ -85,6 +85,8 @@ let g:tagbar_type_asciidoc = {
 "PATH for langague tools plugin
 let g:languagetool_jar='/home/kh/LanguageTool/LanguageTool-2.9/languagetool-commandline.jar'
 
+"Leader key
+let mapleader=","
 
 "Colors
 
@@ -130,6 +132,29 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
+
+
+"Usage: :Shell ls -al 
+"Possible to reexecute the command by typing <localleader>r in normal mode in
+"a window opened by :Shell. 
+"The command :Shell! reexecute the last command. 
+
+function! s:ExecuteInShell(command)
+        let command = join(map(split(a:command), 'expand(v:val)'))
+        let winnr = bufwinnr('^' . command . '$')
+        silent! execute  winnr < 0 ? 'botright new ' . fnameescape(command) : winnr . 'wincmd w'
+        setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
+        echo 'Execute ' . command . '...'
+        silent! execute 'silent %!'. command
+        silent! execute 'resize ' . line('$')
+        silent! redraw
+        silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
+        silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
+        echo 'Shell command ' . command . ' executed.'
+endfunction
+command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
+
+
 
 "Spell checking
 "set spell spelllang=en_gb
