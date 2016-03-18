@@ -38,11 +38,21 @@ Plugin 'reedes/vim-lexical'
 Plugin 'majutsushi/tagbar'
 "Plugin 'vim-scripts/LanguageTool'
 Plugin 'rhysd/vim-grammarous'
-Plugin 'davidhalter/jedi-vim'
+"Plugin 'davidhalter/jedi-vim'
 "Plugin 'klen/python-mode'
-Plugin 'powerline/powerline'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-scripts/indentpython.vim'
+Bundle 'Valloric/YouCompleteMe'
+Plugin 'jnurmine/Zenburn'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/ctrlp.vim'
+Plugin 'nvie/vim-flake8'
 Plugin 'vim-scripts/nginx.vim'
+Plugin 'asciidoc/vim-asciidoc' 
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -59,6 +69,17 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 "Personal change
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Enable folding with the spacebar
+nnoremap <space> za
+
+" See the docstrings for folded code
+let g:SimpylFold_docstring_preview=1
+
 augroup pencil
         autocmd!
         "autocmd FileType markdown,asciidoc call pencil#init()
@@ -91,7 +112,6 @@ let mapleader=","
 "Colors
 
 syntax enable
-"colorscheme badwolf
 
 "Spaces and tab
 
@@ -119,7 +139,24 @@ set showcmd             " show command in bottom bar
         set statusline+=%-14(%l,%c%V%)               " line, character  
         set statusline+=%<%P                         " file position  
 "} 
- 
+
+
+
+" Flagging Unnecessary Whitespace
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+set encoding=utf-8
+
+" autocomplete window goes away when you’re done
+let g:ycm_autoclose_preview_window_after_completion=1
+
+" definition of whatever currently on
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+let python_highlight_all=1
+syntax on
+
 "Option syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
