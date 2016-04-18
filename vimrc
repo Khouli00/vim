@@ -111,6 +111,10 @@ let mapleader=","
 
 "Colors
 
+"for zenburn 256-color mode needed, system wise : export TERM=xterm-256color
+set t_Co=256
+colors zenburn
+
 syntax enable
 
 "Spaces and tab
