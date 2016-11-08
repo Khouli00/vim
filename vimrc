@@ -29,6 +29,7 @@ Plugin 'gmarik/Vundle.vim'
 
 "my plugins
 
+Plugin 'vim-scripts/L9'
 "Plugin 'reedes/vim-pencil'
 "Plugin 'reedes/vim-colors-pencil'
 "Plugin 'reedes/vim-wordy'
@@ -43,15 +44,23 @@ Plugin 'rhysd/vim-grammarous'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Bundle 'Valloric/YouCompleteMe'
-Plugin 'jnurmine/Zenburn'
+"Plugin 'jnurmine/Zenburn'
+Plugin 'tomasr/molokai'
 Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+"Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'nvie/vim-flake8'
 Plugin 'vim-scripts/nginx.vim'
 Plugin 'asciidoc/vim-asciidoc' 
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax' 
+"Plugin 'vim-scripts/FuzzyFinder'
+Plugin 'tpope/vim-surround'
+Plugin 'mattn/emmet-vim'
+"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Bundle "lepture/vim-jinja"
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -69,6 +78,11 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 "Personal change
+
+"Work in UTF-8
+set encoding=utf-8  " The encoding displayed.
+set fileencoding=utf-8  " The encoding written to file.
+
 
 " Enable folding
 set foldmethod=indent
@@ -107,13 +121,13 @@ let g:tagbar_type_asciidoc = {
 let g:languagetool_jar='/home/kh/LanguageTool/LanguageTool-2.9/languagetool-commandline.jar'
 
 "Leader key
-let mapleader=","
+let mapleader=" "
 
 "Colors
 
 "for zenburn 256-color mode needed, system wise : export TERM=xterm-256color
-set t_Co=256
-colors zenburn
+"set t_Co=256
+"colors zenburn
 
 syntax enable
 
@@ -155,8 +169,6 @@ set encoding=utf-8
 " autocomplete window goes away when you’re done
 let g:ycm_autoclose_preview_window_after_completion=1
 
-" definition of whatever currently on
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 let python_highlight_all=1
 syntax on
@@ -196,10 +208,16 @@ endfunction
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 
 
+"remap stuff
+map <C-n> :NERDTreeToggle<CR>
+
+" definition of whatever currently on
+map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <leader>h :YcmCompleter GetDoc<CR>
 
 "Spell checking
 "set spell spelllang=en_gb
-map <F2> :TogglePencil <CR>
+map <F3> :setlocal spell! spelllang=fr_FR<CR>
 map <F4> :setlocal spell! spelllang=en_gb<CR>
 map <F5> :LanguageToolCheck <CR>
 map <F6> :LanguageToolClear <CR>
