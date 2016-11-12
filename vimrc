@@ -37,6 +37,8 @@ Plugin 'vim-scripts/L9'
 Plugin 'reedes/vim-lexical'
 "Plugin 'reedes/vim-litecorrect'
 Plugin 'majutsushi/tagbar'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'haya14busa/incsearch.vim'
 "Plugin 'vim-scripts/LanguageTool'
 Plugin 'rhysd/vim-grammarous'
 "Plugin 'davidhalter/jedi-vim'
@@ -51,7 +53,6 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
-Plugin 'nvie/vim-flake8'
 Plugin 'vim-scripts/nginx.vim'
 Plugin 'asciidoc/vim-asciidoc' 
 Plugin 'vim-pandoc/vim-pandoc'
@@ -116,6 +117,21 @@ let g:tagbar_type_asciidoc = {
     \ ],
     \ 'sort' : 0
 \ }
+
+"Remap for insearch plugin
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+":h g:incsearch#auto_nohlsearch
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+
 
 "PATH for langague tools plugin
 let g:languagetool_jar='/home/kh/LanguageTool/LanguageTool-2.9/languagetool-commandline.jar'
@@ -182,9 +198,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_checkers = ['pyflakes']
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
+nnoremap <F9> :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 
 
 "Usage: :Shell ls -al 
