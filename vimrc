@@ -137,7 +137,7 @@ map g# <Plug>(incsearch-nohl-g#)
 let g:languagetool_jar='/home/kh/LanguageTool/LanguageTool-2.9/languagetool-commandline.jar'
 
 "Leader key
-let mapleader=" "
+let mapleader=","
 
 "Colors
 
