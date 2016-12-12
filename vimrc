@@ -185,6 +185,8 @@ set encoding=utf-8
 " autocomplete window goes away when you’re done
 let g:ycm_autoclose_preview_window_after_completion=1
 
+" choose ycm python as the first of path
+let g:ycm_python_binary_path = 'python'
 
 let python_highlight_all=1
 syntax on
