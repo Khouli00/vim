@@ -30,37 +30,22 @@ Plugin 'gmarik/Vundle.vim'
 "my plugins
 
 Plugin 'vim-scripts/L9'
-"Plugin 'reedes/vim-pencil'
-"Plugin 'reedes/vim-colors-pencil'
-"Plugin 'reedes/vim-wordy'
-"Plugin 'junegunn/limelight.vim'
-Plugin 'reedes/vim-lexical'
-"Plugin 'reedes/vim-litecorrect'
 Plugin 'majutsushi/tagbar'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'haya14busa/incsearch.vim'
-"Plugin 'vim-scripts/LanguageTool'
-Plugin 'rhysd/vim-grammarous'
-"Plugin 'davidhalter/jedi-vim'
-"Plugin 'klen/python-mode'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'Shougo/neocomplete.vim'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
-Bundle 'Valloric/YouCompleteMe'
-"Plugin 'jnurmine/Zenburn'
-Plugin 'tomasr/molokai'
 Plugin 'vim-airline/vim-airline'
-"Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'vim-scripts/nginx.vim'
-Plugin 'asciidoc/vim-asciidoc' 
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax' 
-"Plugin 'vim-scripts/FuzzyFinder'
 Plugin 'tpope/vim-surround'
 Plugin 'mattn/emmet-vim'
-"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle "lepture/vim-jinja"
 
 " All of your Plugins must be added before the following line
@@ -84,7 +69,6 @@ filetype plugin indent on    " required
 set encoding=utf-8  " The encoding displayed.
 set fileencoding=utf-8  " The encoding written to file.
 
-
 " Enable folding
 set foldmethod=indent
 set foldlevel=99
@@ -94,29 +78,6 @@ nnoremap <space> za
 
 " See the docstrings for folded code
 let g:SimpylFold_docstring_preview=1
-
-augroup pencil
-        autocmd!
-        "autocmd FileType markdown,asciidoc call pencil#init()
-        "autocmd FileType text call pencil#init()
-        autocmd FileType asciidoc call lexical#init()
-        "autocmd FileType asciidoc call litecorrect#init()
-augroup END
-
-au BufNewFile,BufRead *.asc set filetype=asciidoc
-
-let g:tagbar_type_asciidoc = {
-    \ 'ctagstype' : 'asciidoc',
-    \ 'kinds' : [
-        \ 'h:table of contents',
-        \ 'a:anchors:1',
-        \ 't:titles:3',
-        \ 'n:includes:1',
-        \ 'i:images:3',
-        \ 'I:inline images:3'
-    \ ],
-    \ 'sort' : 0
-\ }
 
 "Remap for insearch plugin
 map /  <Plug>(incsearch-forward)
@@ -132,20 +93,11 @@ map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
-
-"PATH for langague tools plugin
-let g:languagetool_jar='/home/kh/LanguageTool/LanguageTool-2.9/languagetool-commandline.jar'
-
 "Leader key
 let mapleader=","
 
 "Colors
-
-"for zenburn 256-color mode needed, system wise : export TERM=xterm-256color
-"set t_Co=256
-"colors zenburn
-
-syntax enable
+set t_Co=256
 
 "Spaces and tab
 
@@ -180,14 +132,6 @@ set showcmd             " show command in bottom bar
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
-set encoding=utf-8
-
-" autocomplete window goes away when you’re done
-let g:ycm_autoclose_preview_window_after_completion=1
-
-" choose ycm python as the first of path
-let g:ycm_python_binary_path = 'python'
-
 let python_highlight_all=1
 syntax on
 
@@ -202,7 +146,6 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['pyflakes']
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-nnoremap <F9> :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 
 
 "Usage: :Shell ls -al 
@@ -225,13 +168,51 @@ function! s:ExecuteInShell(command)
 endfunction
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 
+"neocomplete
+"
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
 
 "remap stuff
 map <C-n> :NERDTreeToggle<CR>
-
-" definition of whatever currently on
-map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
-map <leader>h :YcmCompleter GetDoc<CR>
 
 "Spell checking
 "set spell spelllang=en_gb
@@ -240,3 +221,4 @@ map <F4> :setlocal spell! spelllang=en_gb<CR>
 map <F5> :LanguageToolCheck <CR>
 map <F6> :LanguageToolClear <CR>
 map <F8> :TagbarToggle<CR>
+nnoremap <F9> :SyntasticCheck<CR> :SyntasticToggleMode<CR>
