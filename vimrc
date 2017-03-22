@@ -33,8 +33,8 @@ Plugin 'vim-scripts/L9'
 Plugin 'majutsushi/tagbar'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'haya14busa/incsearch.vim'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'Shougo/neocomplete.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'tomasr/molokai'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'vim-airline/vim-airline'
@@ -64,6 +64,12 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 "Personal change
+
+"Color
+syntax enable
+colorscheme molokai
+let g:rehash256 = 1
+
 
 "Work in UTF-8
 set encoding=utf-8  " The encoding displayed.
@@ -135,6 +141,11 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 let python_highlight_all=1
 syntax on
 
+
+"option autocmplete
+let g:ycm_python_binary_path = 'python'
+let g:ycm_server_python_interpreter = '/usr/bin/python3'
+
 "Option syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -168,57 +179,16 @@ function! s:ExecuteInShell(command)
 endfunction
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 
-"neocomplete
-"
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
 
 "remap stuff
 map <C-n> :NERDTreeToggle<CR>
 
 "Spell checking
 "set spell spelllang=en_gb
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
 map <F3> :setlocal spell! spelllang=fr_FR<CR>
 map <F4> :setlocal spell! spelllang=en_gb<CR>
-map <F5> :LanguageToolCheck <CR>
-map <F6> :LanguageToolClear <CR>
 map <F8> :TagbarToggle<CR>
 nnoremap <F9> :SyntasticCheck<CR> :SyntasticToggleMode<CR>
