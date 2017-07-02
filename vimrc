@@ -46,6 +46,7 @@ Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax' 
 Plugin 'tpope/vim-surround'
 Plugin 'mattn/emmet-vim'
+Plugin 'tpope/vim-commentary'
 Bundle "lepture/vim-jinja"
 
 " All of your Plugins must be added before the following line
@@ -145,6 +146,9 @@ syntax on
 "option autocmplete
 let g:ycm_python_binary_path = 'python'
 let g:ycm_server_python_interpreter = '/usr/bin/python3'
+" autocomplete window goes away when you’re done
+let g:ycm_autoclose_preview_window_after_completion=1
+
 
 "Option syntastic
 set statusline+=%#warningmsg#
@@ -181,7 +185,13 @@ command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 
 
 "remap stuff
-map <C-n> :NERDTreeToggle<CR>
+map <C-t> :NERDTreeToggle<CR>
+map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <leader>h :YcmCompleter GetDoc<CR>
+map <C-n> :bnext<CR>
+map <C-b> :bprevious<CR>
+
+
 
 "Spell checking
 "set spell spelllang=en_gb
