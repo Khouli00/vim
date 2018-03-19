@@ -76,9 +76,11 @@ let g:rehash256 = 1
 set encoding=utf-8  " The encoding displayed.
 set fileencoding=utf-8  " The encoding written to file.
 
-" Enable folding
-set foldmethod=indent
-set foldlevel=99
+
+" folding stuff
+" Note, perl automatically sets foldmethod in the syntax file
+autocmd Syntax c,py,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax
+autocmd Syntax c,cpp,py,vim,xml,html,xhtml,perl normal zR
 
 " Enable folding with the spacebar
 nnoremap <space> za
@@ -114,6 +116,7 @@ set expandtab       " tabs are spaces
 
 "Copy to clipboard
 set clipboard=unnamedplus
+
 
 "UI config
 
