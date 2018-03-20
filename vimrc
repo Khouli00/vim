@@ -38,7 +38,7 @@ Plugin 'tomasr/molokai'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'vim-airline/vim-airline'
-Plugin 'scrooloose/syntastic'
+Plugin 'w0rp/ale'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'vim-scripts/nginx.vim'
@@ -152,20 +152,6 @@ let g:ycm_server_python_interpreter = '/usr/bin/python3'
 " autocomplete window goes away when you’re done
 let g:ycm_autoclose_preview_window_after_completion=1
 
-
-"Option syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['pyflakes']
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-
-
 "Usage: :Shell ls -al 
 "Possible to reexecute the command by typing <localleader>r in normal mode in
 "a window opened by :Shell. 
@@ -195,7 +181,6 @@ map <C-n> :bnext<CR>
 map <C-b> :bprevious<CR>
 
 
-
 "Spell checking
 "set spell spelllang=en_gb
 nnoremap <F2> :set invpaste paste?<CR>
@@ -204,4 +189,3 @@ set showmode
 map <F3> :setlocal spell! spelllang=fr_FR<CR>
 map <F4> :setlocal spell! spelllang=en_gb<CR>
 map <F8> :TagbarToggle<CR>
-nnoremap <F9> :SyntasticCheck<CR> :SyntasticToggleMode<CR>
