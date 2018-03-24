@@ -145,6 +145,14 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 let python_highlight_all=1
 syntax on
 
+"linter ALE option
+let g:ale_fixers = {
+\   'python': ['autopep8','isort'],
+\}
+" Set this setting in vimrc if you want to fix files automatically on save.
+" This is off by default.
+let g:ale_fix_on_save = 1
+
 
 "option autocmplete
 let g:ycm_python_binary_path = 'python'
